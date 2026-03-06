@@ -90,14 +90,6 @@ SMM272_Risk_Analysis/
 │       ├── fig_violations_heatmap.png
 │       └── fig_violation_timeseries.png
 │
-├── docs/                              # Word report generators and output .docx files
-│   ├── q1_1_generate_docs.py          # Generates Part 1 methodology report
-│   ├── q1_2_generate_docs.py          # Generates Part 2 VaR/ES methodology report
-│   ├── q1_3_generate_docs.py          # Generates Part 3 backtesting report
-│   ├── Q1_Equally_Weighted_Portfolio_Methodology.docx
-│   ├── Q1_Statistical_Analysis_Report.docx
-│   └── Q1_VaR_Violations_Backtesting_Report.docx
-│
 ├── logs/                              # Timestamped run logs
 ├── .gitignore
 └── README.md
@@ -110,7 +102,7 @@ SMM272_Risk_Analysis/
 ### Prerequisites
 
 ```bash
-pip install yfinance pandas numpy matplotlib seaborn scipy statsmodels arch python-docx
+pip install yfinance pandas numpy matplotlib seaborn scipy statsmodels arch
 ```
 
 > **`arch`** is required for GARCH(1,1) estimation (Part 2 & 3). If unavailable, GARCH automatically falls back to the Parametric Normal model.
@@ -140,17 +132,6 @@ python q1_main.py --from q1_1 --to q1_3
 python q1_main.py --dry-run
 python q1_main.py --parts q1_3 --dry-run
 ```
-
-### Generate Word reports
-
-```bash
-# From project root
-python docs/q1_1_generate_docs.py
-python docs/q1_2_generate_docs.py
-python docs/q1_3_generate_docs.py
-```
-
-Each script reads output CSVs from the corresponding `output_q1_*/` folder and writes a `.docx` report to `docs/`.
 
 ---
 
