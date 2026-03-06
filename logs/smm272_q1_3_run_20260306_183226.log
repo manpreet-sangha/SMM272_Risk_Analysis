@@ -1,0 +1,31 @@
+2026-03-06 18:32:26  q1_3_var_violations               INFO      ******************************************************
+2026-03-06 18:32:26  q1_3_var_violations               INFO      Start - q1_3_var_violations.py
+2026-03-06 18:32:26  q1_3_var_violations               INFO      ******************************************************
+2026-03-06 18:32:26  q1_3_var_violations               INFO      ================================================================================
+2026-03-06 18:32:26  q1_3_var_violations               INFO      SMM272 Q1 Part 3 — VaR Violations at Multiple Confidence Levels
+2026-03-06 18:32:26  q1_3_var_violations               INFO      ================================================================================
+2026-03-06 18:32:26  q1_3_var_violations               INFO        Confidence levels : ['90%', '95%', '99%']
+2026-03-06 18:32:26  q1_3_var_violations               INFO        Rolling window    : 6 months
+2026-03-06 18:32:26  q1_3_var_violations               INFO        Start date        : 2014-07-01
+2026-03-06 18:32:26  q1_3_var_violations               INFO        Run log           : C:\Users\msang\OneDrive - City St George's, University of London\Documents\Github\RAC\SMM272_Risk_Analysis\logs\smm272_q1_3_run_20260306_183226.log
+2026-03-06 18:32:26  q1_1_build_portfolio              INFO      ******************************************************
+2026-03-06 18:32:26  q1_1_build_portfolio              INFO      Start - q1_1_build_portfolio.py
+2026-03-06 18:32:26  q1_1_build_portfolio              INFO      ******************************************************
+2026-03-06 18:32:26  q1_1_build_portfolio              INFO      Loaded prices from cache (3017 days)
+2026-03-06 18:32:26  q1_1_build_portfolio              INFO      ----------------------------------------------------------------------
+2026-03-06 18:32:26  q1_1_build_portfolio              INFO      EQUALLY WEIGHTED PORTFOLIO (1/6 each)
+2026-03-06 18:32:26  q1_1_build_portfolio              INFO      ----------------------------------------------------------------------
+2026-03-06 18:32:26  q1_1_build_portfolio              INFO        Log returns computed: 3016 observations
+2026-03-06 18:32:26  q1_1_build_portfolio              INFO        Portfolio returns saved to output/
+2026-03-06 18:32:26  q1_1_build_portfolio              INFO      ******************************************************
+2026-03-06 18:32:26  q1_1_build_portfolio              INFO      End - q1_1_build_portfolio.py
+2026-03-06 18:32:26  q1_1_build_portfolio              INFO      ******************************************************
+2026-03-06 18:32:26  q1_3_var_violations               INFO      
+--- Running rolling windows (all confidence levels) ---
+2026-03-06 18:32:27  q1_3_rolling                      INFO        Total rolling windows  : 2,893
+2026-03-06 18:32:27  q1_3_rolling                      INFO        First forecast date    : 2014-07-01
+2026-03-06 18:32:27  q1_3_rolling                      INFO        Last  forecast date    : 2025-12-30
+2026-03-06 18:32:27  q1_3_rolling                      INFO        Confidence levels      : ['90%', '95%', '99%']
+2026-03-06 18:32:27  q1_3_rolling                      INFO        [    1/2893] 2014-07-01
+2026-03-06 18:34:25  q1_3_rolling                      INFO        [  501/2893] 2016-06-24
+2026-03-06 18:36:30  q1_3_rolling                      INFO        [ 1001/2893] 2018-06-20

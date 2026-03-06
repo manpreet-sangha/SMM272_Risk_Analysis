@@ -1,0 +1,13 @@
+Method,Tag,Confidence (%),Violations (k),N,LR_uc,p-value,Reject H0 (5%)
+Historical Simulation,HS,90.0,307,2893,1.1821,0.2769,False
+Historical Simulation,HS,95.0,180,2893,8.467,0.0036,True
+Historical Simulation,HS,99.0,49,2893,11.6412,0.0006,True
+Parametric Normal,Normal,90.0,286,2893,0.042,0.8377,False
+Parametric Normal,Normal,95.0,180,2893,8.467,0.0036,True
+Parametric Normal,Normal,99.0,87,2893,76.6245,0.0,True
+Parametric Student-t,StudentT,90.0,347,2893,12.0995,0.0005,True
+Parametric Student-t,StudentT,95.0,197,2893,18.0049,0.0,True
+Parametric Student-t,StudentT,99.0,63,2893,30.3271,0.0,True
+"GARCH(1,1) Normal",GARCH,90.0,315,2893,2.4728,0.1158,False
+"GARCH(1,1) Normal",GARCH,95.0,203,2893,22.1366,0.0,True
+"GARCH(1,1) Normal",GARCH,99.0,82,2893,65.7113,0.0,True
