@@ -12,3 +12,6 @@ env/
 # OS
 Thumbs.db
 .DS_Store
+
+# Docs (Word reports and generators — kept local only)
+docs/
