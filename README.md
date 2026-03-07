@@ -38,13 +38,6 @@ Quantitative risk analysis coursework covering six questions in financial risk m
 SMM272_Risk_Analysis/
 ├── config.py                          # Shared constants: tickers, dates, paths, VaR/MC metadata
 ├── logger.py                          # Shared logging utilities (setup_run_logger, get_logger)
-├── docs/
-│   ├── main.tex                       # LaTeX report (all questions)
-│   ├── references.bib                 # BibTeX bibliography
-│   ├── q5_generate_docs.py            # Word report generator for Q5
-│   ├── q6_generate_docs.py            # Word report generator for Q6
-│   └── Q5_SPAN_Margining_Report.docx  # Generated Word report (Q5)
-│   └── Q6_VaR_Options_Portfolio_Report.docx  # Generated Word report (Q6)
 ├── Q1/                                # Question 1
 │   │
 │   ├── q1_main.py                     # Unified runner — runs any combination of Q1 sub-parts
@@ -249,13 +242,6 @@ python Q6/q6_main.py
 # Run specific steps
 python Q6/q6_main.py --parts simulation risk figures
 python Q6/q6_main.py --dry-run
-```
-
-### Generating Word Reports
-
-```bash
-python docs/q5_generate_docs.py   # → docs/Q5_SPAN_Margining_Report.docx
-python docs/q6_generate_docs.py   # → docs/Q6_VaR_Options_Portfolio_Report.docx
 ```
 
 ---
