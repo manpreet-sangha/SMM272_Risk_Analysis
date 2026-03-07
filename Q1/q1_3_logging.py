@@ -12,14 +12,13 @@ from logger import get_logger
 logger = get_logger("q1_3_logging")
 
 
-def log_violations(violations_df, kupiec_df):
+def log_violations(violations_df):
     """
-    Log the violations summary table and Kupiec POF test results.
+    Log the violations summary table (counts and rates only).
 
     Parameters
     ----------
-    violations_df : pd.DataFrame — output of run_all_tests (violations counts/rates)
-    kupiec_df     : pd.DataFrame — output of run_all_tests (Kupiec POF results)
+    violations_df : pd.DataFrame — output of count_violations()
     """
     logger.info("\n" + "=" * 80)
     logger.info("VaR VIOLATIONS SUMMARY")
@@ -35,18 +34,4 @@ def log_violations(violations_df, kupiec_df):
             f" {row['N']:>6,d} {row['Violations (k)']:>6,d}"
             f" {row['Expected (\u2248)']:>6.1f} {row['Observed Rate (%)']:>8.3f}%"
             f" {row['Nominal Rate (%)']:>6.1f}% {row['Excess (pp)']:>+9.3f}pp"
-        )
-
-    logger.info("\n" + "=" * 80)
-    logger.info("KUPIEC POF TEST  (H0: unconditional coverage is correct)")
-    logger.info("=" * 80)
-    logger.info(
-        f"  {'Method':<22} {'CI%':>5} {'LR_uc':>8} {'p-value':>9} {'Reject':>8}"
-    )
-    logger.info("  " + "-" * 55)
-    for _, row in kupiec_df.iterrows():
-        rej = "YES ***" if row["Reject H0 (5%)"] else "No"
-        logger.info(
-            f"  {row['Method']:<22} {row['Confidence (%)']:>5.0f}"
-            f" {row['LR_uc']:>8.3f} {row['p-value']:>9.4f} {rej:>8}"
         )

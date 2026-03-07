@@ -100,25 +100,45 @@ def generate_plots(df, violations_df, violation_flags, confidence_levels, method
             matrix[i, j]     = float(row["Violations (k)"].values[0])
             exp_matrix[i, j] = float(row["Expected (\u2248)"].values[0])
 
+    # Professional colormaps: warm (YlOrRd) for observed, cool (GnBu) for expected
+    _CMAPS = ["YlOrRd", "GnBu"]
+
     fig, axes = plt.subplots(1, 2, figsize=(12, 4))
-    for ax, data, title, cmap in zip(
+    for ax, data, title, cmap_name in zip(
         axes,
         [matrix, exp_matrix],
         ["Observed Violations (k)", "Expected Violations (\u2248)"],
-        ["Blues", "Greys"],
+        _CMAPS,
     ):
-        im = ax.imshow(data, cmap=cmap, aspect="auto")
+        cmap = plt.get_cmap(cmap_name)
+        vmin, vmax = data.min(), data.max()
+        im = ax.imshow(data, cmap=cmap, aspect="auto", vmin=vmin, vmax=vmax)
         ax.set_xticks(range(len(ci_strs)))
-        ax.set_xticklabels(ci_strs)
+        ax.set_xticklabels(ci_strs, fontsize=10)
         ax.set_yticks(range(len(lbl_all)))
         ax.set_yticklabels(lbl_all, fontsize=9)
-        ax.set_xlabel("Confidence Level")
-        ax.set_title(title, fontsize=11)
+        ax.set_xlabel("Confidence Level", fontsize=10)
+        ax.set_title(title, fontsize=11, fontweight="bold")
         fig.colorbar(im, ax=ax, shrink=0.85)
+        # Draw thin white separator lines between cells
+        n_rows, n_cols = data.shape
+        for x_line in range(1, n_cols):
+            ax.axvline(x_line - 0.5, color="white", linewidth=1.2, zorder=3)
+        for y_line in range(1, n_rows):
+            ax.axhline(y_line - 0.5, color="white", linewidth=1.2, zorder=3)
+        ax.set_xlim(-0.5, n_cols - 0.5)
+        ax.set_ylim(n_rows - 0.5, -0.5)
+
+        # Auto-contrast text: white on dark cells, dark navy on light cells
         for i in range(len(tags_all)):
             for j in range(len(ci_pcts)):
+                norm_val = (data[i, j] - vmin) / max(vmax - vmin, 1e-9)
+                r, g, b, _ = cmap(norm_val)
+                luminance  = 0.299 * r + 0.587 * g + 0.114 * b
+                txt_color  = "white" if luminance < 0.50 else "#1a1a2e"
                 ax.text(j, i, f"{data[i, j]:.0f}", ha="center", va="center",
-                        fontsize=10, color="black")
+                        fontsize=11, fontweight="bold", color=txt_color)
+
     fig.suptitle(
         "VaR Violation Counts — All Methods and Confidence Levels", fontsize=12
     )

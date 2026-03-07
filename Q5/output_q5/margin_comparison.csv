@@ -1,0 +1,5 @@
+pair_name,leg1_margin,leg2_margin,no_net_total,span_net_margin,netting_benefit,netting_pct
+P1: Long Call + Short Put,0.00,5202.79,5202.79,2229.76,2973.03,57.14
+P2: Short Call + Long Put,5554.95,0.00,5554.95,2024.34,3530.61,63.56
+P3: Long Call + Long Futures,0.00,7000.00,7000.00,6096.21,903.79,12.91
+P4: Long Futures + Long Put,7000.00,0.00,7000.00,0.00,7000.00,100.00

@@ -1,0 +1,15 @@
+2026-03-07 10:14:36  q5_main                           INFO      ******************************************************
+2026-03-07 10:14:36  q5_main                           INFO      Start - q5_main.py
+2026-03-07 10:14:36  q5_main                           INFO      ******************************************************
+2026-03-07 10:14:36  q5_main                           INFO      ******************************************************
+2026-03-07 10:14:36  q5_main                           INFO      STEP 1 — Build SPAN 16-scenario risk arrays
+2026-03-07 10:14:36  q5_main                           INFO      ******************************************************
+2026-03-07 10:14:42  q5_main                           ERROR     Traceback (most recent call last):
+  File "C:\Users\msang\OneDrive - City St George's, University of London\Documents\Github\RAC\SMM272_Risk_Analysis\Q5\q5_main.py", line 92, in main
+    from q5_span_scenarios import build_scenario_table, scenario_breakdown_df
+  File "C:\Users\msang\OneDrive - City St George's, University of London\Documents\Github\RAC\SMM272_Risk_Analysis\Q5\q5_span_scenarios.py", line 22, in <module>
+    from q5_market_data import (
+    ...<2 lines>...
+    )
+ImportError: cannot import name 'r' from 'q5_market_data' (C:\Users\msang\OneDrive - City St George's, University of London\Documents\Github\RAC\SMM272_Risk_Analysis\Q5\q5_market_data.py)
+

@@ -1,0 +1,9 @@
+pair_name,method,scanning_risk,som,active_risk,nov_credit,span_margin
+P1: Long Call + Short Put,No-Net,8964.75,175.00,8964.75,3761.97,5202.79
+P1: Long Call + Short Put,SPAN-Net,6895.52,175.00,6895.52,4665.76,2229.76
+P2: Short Call + Long Put,No-Net,9251.07,175.00,9251.07,3696.13,5554.95
+P2: Short Call + Long Put,SPAN-Net,6997.45,175.00,6997.45,4973.11,2024.34
+P3: Long Call + Long Futures,No-Net,10761.97,0.00,10761.97,3761.97,7000.00
+P3: Long Call + Long Futures,SPAN-Net,10761.97,0.00,10761.97,4665.76,6096.21
+P4: Long Futures + Long Put,No-Net,10696.13,0.00,10696.13,3696.13,7000.00
+P4: Long Futures + Long Put,SPAN-Net,3915.16,0.00,3915.16,3915.16,0.00

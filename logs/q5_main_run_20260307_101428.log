@@ -1,0 +1,8 @@
+2026-03-07 10:14:28  q5_main                           INFO      ******************************************************
+2026-03-07 10:14:28  q5_main                           INFO      Start - q5_main.py
+2026-03-07 10:14:28  q5_main                           INFO      ******************************************************
+2026-03-07 10:14:28  q5_main                           INFO      DRY RUN — steps that would execute:
+2026-03-07 10:14:28  q5_main                           INFO        [x] scenarios: Build SPAN 16-scenario risk arrays for all 4 pairs
+2026-03-07 10:14:28  q5_main                           INFO        [x] margins: Compute no-netting and SPAN-netting margins
+2026-03-07 10:14:28  q5_main                           INFO        [x] figures: Generate all 6 figures
+2026-03-07 10:14:28  q5_main                           INFO        [x] summary: Print tables and save CSVs to output_q5/

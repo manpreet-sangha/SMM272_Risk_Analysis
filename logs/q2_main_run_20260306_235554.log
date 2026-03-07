@@ -1,0 +1,73 @@
+2026-03-06 23:55:54  q2_main                           INFO      ******************************************************
+2026-03-06 23:55:54  q2_main                           INFO      Start - q2_main.py
+2026-03-06 23:55:54  q2_main                           INFO      ******************************************************
+2026-03-06 23:55:54  q2_main                           INFO      ******************************************************
+2026-03-06 23:55:54  q2_main                           INFO      STEP 1 — Fit H0 (Gaussian) and H1 (GARCH(1,1))
+2026-03-06 23:55:54  q2_main                           INFO      ******************************************************
+2026-03-06 23:55:58  matplotlib                        DEBUG     matplotlib data path: C:\Users\msang\OneDrive - City St George's, University of London\Documents\Github\RAC\SMM272_Risk_Analysis\.venv\Lib\site-packages\matplotlib\mpl-data
+2026-03-06 23:55:58  matplotlib                        DEBUG     CONFIGDIR=C:\Users\msang\.matplotlib
+2026-03-06 23:55:58  matplotlib                        DEBUG     interactive is False
+2026-03-06 23:55:58  matplotlib                        DEBUG     platform is win32
+2026-03-06 23:55:58  matplotlib                        DEBUG     CACHEDIR=C:\Users\msang\.matplotlib
+2026-03-06 23:55:58  matplotlib.font_manager           DEBUG     Using fontManager instance from C:\Users\msang\.matplotlib\fontlist-v390.json
+2026-03-06 23:55:59  q2_fit_models                     INFO      ******************************************************
+2026-03-06 23:55:59  q2_fit_models                     INFO      Start - q2_fit_models.py
+2026-03-06 23:55:59  q2_fit_models                     INFO      ******************************************************
+2026-03-06 23:55:59  q2_fit_models                     INFO      Loaded portfolio returns: 3016 observations (2014-01-03 to 2025-12-30)
+2026-03-06 23:55:59  q2_fit_models                     INFO      Gaussian H0 fit:  μ = 0.000975,  σ = 0.015112
+2026-03-06 23:55:59  q2_fit_models                     INFO      GARCH(1,1) H1 fit: μ=0.001366, ω=9.32e-06, α=0.1358, β=0.8220, α+β=0.9579, σ_LR=0.014867
+2026-03-06 23:55:59  q2_fit_models                     INFO      Saved fitted parameters → C:\Users\msang\OneDrive - City St George's, University of London\Documents\Github\RAC\SMM272_Risk_Analysis\Q2\output_q2\fitted_params.csv
+2026-03-06 23:55:59  q2_fit_models                     INFO      ******************************************************
+2026-03-06 23:55:59  q2_fit_models                     INFO      End - q2_fit_models.py
+2026-03-06 23:55:59  q2_fit_models                     INFO      ******************************************************
+2026-03-06 23:55:59  q2_main                           INFO        Completed in 5.1s
+2026-03-06 23:55:59  q2_main                           INFO      ******************************************************
+2026-03-06 23:55:59  q2_main                           INFO      STEP 2 — Monte Carlo Kupiec power (T=2893)
+2026-03-06 23:55:59  q2_main                           INFO      ******************************************************
+2026-03-06 23:55:59  q2_kupiec_power                   INFO      ******************************************************
+2026-03-06 23:55:59  q2_kupiec_power                   INFO      Start - q2_kupiec_power.py
+2026-03-06 23:55:59  q2_kupiec_power                   INFO      ******************************************************
+2026-03-06 23:55:59  q2_kupiec_power                   INFO      Simulating 10,000 Gaussian paths (T=2893) …
+2026-03-06 23:56:00  q2_kupiec_power                   INFO      Simulating 10,000 GARCH paths (T=2893) …
+2026-03-06 23:56:53  q2_kupiec_power                   INFO        CI=90%: VaR=-0.0184, size=0.052, power=0.829, E[viol_H1]=230.4 (expected 289.3)
+2026-03-06 23:56:53  q2_kupiec_power                   INFO        CI=95%: VaR=-0.0239, size=0.056, power=0.592, E[viol_H1]=120.1 (expected 144.7)
+2026-03-06 23:56:53  q2_kupiec_power                   INFO        CI=99%: VaR=-0.0342, size=0.055, power=0.386, E[viol_H1]=35.6 (expected 28.9)
+2026-03-06 23:56:56  q2_kupiec_power                   INFO      Saved power summary → C:\Users\msang\OneDrive - City St George's, University of London\Documents\Github\RAC\SMM272_Risk_Analysis\Q2\output_q2\power_summary.csv
+2026-03-06 23:56:56  q2_kupiec_power                   INFO      ******************************************************
+2026-03-06 23:56:56  q2_kupiec_power                   INFO      End - q2_kupiec_power.py
+2026-03-06 23:56:56  q2_kupiec_power                   INFO      ******************************************************
+2026-03-06 23:56:56  q2_main                           INFO        Completed in 56.6s
+2026-03-06 23:56:56  q2_main                           INFO      ******************************************************
+2026-03-06 23:56:56  q2_main                           INFO      STEP 3 — Power vs. sample size T
+2026-03-06 23:56:56  q2_main                           INFO      ******************************************************
+2026-03-06 23:56:56  q2_power_vs_T                     INFO      ******************************************************
+2026-03-06 23:56:56  q2_power_vs_T                     INFO      Start - q2_power_vs_T.py
+2026-03-06 23:56:56  q2_power_vs_T                     INFO      ******************************************************
+2026-03-06 23:56:56  q2_power_vs_T                     INFO        T = 125 — simulating 10,000 paths …
+2026-03-06 23:56:59  q2_power_vs_T                     INFO        T = 250 — simulating 10,000 paths …
+2026-03-06 23:57:03  q2_power_vs_T                     INFO        T = 500 — simulating 10,000 paths …
+2026-03-06 23:57:11  q2_power_vs_T                     INFO        T = 750 — simulating 10,000 paths …
+2026-03-06 23:57:24  q2_power_vs_T                     INFO        T = 1000 — simulating 10,000 paths …
+2026-03-06 23:57:45  q2_power_vs_T                     INFO        T = 1500 — simulating 10,000 paths …
+2026-03-06 23:58:17  q2_power_vs_T                     INFO        T = 2000 — simulating 10,000 paths …
+2026-03-06 23:58:56  q2_power_vs_T                     INFO        T = 2893 — simulating 10,000 paths …
+2026-03-06 23:59:49  q2_power_vs_T                     INFO      Saved power-vs-T table → C:\Users\msang\OneDrive - City St George's, University of London\Documents\Github\RAC\SMM272_Risk_Analysis\Q2\output_q2\power_vs_T.csv
+2026-03-06 23:59:49  q2_power_vs_T                     INFO      ******************************************************
+2026-03-06 23:59:49  q2_power_vs_T                     INFO      End - q2_power_vs_T.py
+2026-03-06 23:59:49  q2_power_vs_T                     INFO      ******************************************************
+2026-03-06 23:59:49  q2_main                           INFO        Completed in 173.1s
+2026-03-06 23:59:49  q2_main                           INFO      ******************************************************
+2026-03-06 23:59:49  q2_main                           INFO      STEP 4 — Power vs. GARCH persistence
+2026-03-06 23:59:49  q2_main                           INFO      ******************************************************
+2026-03-06 23:59:49  q2_power_vs_persistence           INFO      ******************************************************
+2026-03-06 23:59:49  q2_power_vs_persistence           INFO      Start - q2_power_vs_persistence.py
+2026-03-06 23:59:49  q2_power_vs_persistence           INFO      ******************************************************
+2026-03-06 23:59:49  q2_power_vs_persistence           INFO        ρ = 0.50 — simulating 10,000 GARCH paths …
+2026-03-07 00:00:50  q2_power_vs_persistence           INFO        ρ = 0.60 — simulating 10,000 GARCH paths …
+2026-03-07 00:01:36  q2_power_vs_persistence           INFO        ρ = 0.70 — simulating 10,000 GARCH paths …
+2026-03-07 00:02:19  q2_power_vs_persistence           INFO        ρ = 0.75 — simulating 10,000 GARCH paths …
+2026-03-07 00:03:06  q2_power_vs_persistence           INFO        ρ = 0.80 — simulating 10,000 GARCH paths …
+2026-03-07 00:03:55  q2_power_vs_persistence           INFO        ρ = 0.85 — simulating 10,000 GARCH paths …
+2026-03-07 00:04:43  q2_power_vs_persistence           INFO        ρ = 0.90 — simulating 10,000 GARCH paths …
+2026-03-07 00:05:27  q2_power_vs_persistence           INFO        ρ = 0.93 — simulating 10,000 GARCH paths …
+2026-03-07 00:06:25  q2_power_vs_persistence           INFO        ρ = 0.95 — simulating 10,000 GARCH paths …

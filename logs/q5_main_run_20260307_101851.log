@@ -1,0 +1,25 @@
+2026-03-07 10:18:51  q5_main                           INFO      ******************************************************
+2026-03-07 10:18:51  q5_main                           INFO      Start - q5_main.py
+2026-03-07 10:18:51  q5_main                           INFO      ******************************************************
+2026-03-07 10:18:51  q5_main                           INFO      ******************************************************
+2026-03-07 10:18:51  q5_main                           INFO      STEP 1 — Build SPAN 16-scenario risk arrays
+2026-03-07 10:18:51  q5_main                           INFO      ******************************************************
+2026-03-07 10:19:00  q5_main                           INFO        Scenario table built: 16 scenarios
+2026-03-07 10:19:00  q5_main                           INFO        P1 worst weighted loss: $6,895.52
+2026-03-07 10:19:00  q5_main                           INFO        P2 worst weighted loss: $6,997.45
+2026-03-07 10:19:00  q5_main                           INFO        P3 worst weighted loss: $10,761.97
+2026-03-07 10:19:00  q5_main                           INFO        P4 worst weighted loss: $3,915.16
+2026-03-07 10:19:00  q5_main                           INFO        Completed in 9.2s
+2026-03-07 10:19:00  q5_main                           INFO      ******************************************************
+2026-03-07 10:19:00  q5_main                           INFO      STEP 2 — No-netting and SPAN-netting margins
+2026-03-07 10:19:00  q5_main                           INFO      ******************************************************
+2026-03-07 10:19:00  q5_main                           INFO        Pair                                    No-Net  SPAN-Net  Benefit%
+2026-03-07 10:19:00  q5_main                           INFO        -----------------------------------------------------------------
+2026-03-07 10:19:00  q5_main                           INFO        P1: Long Call + Short Put             $   5,203  $   2,230      57.1%
+2026-03-07 10:19:00  q5_main                           INFO        P2: Short Call + Long Put             $   5,555  $   2,024      63.6%
+2026-03-07 10:19:00  q5_main                           INFO        P3: Long Call + Long Futures          $   7,000  $   6,096      12.9%
+2026-03-07 10:19:00  q5_main                           INFO        P4: Long Futures + Long Put           $   7,000  $       0     100.0%
+2026-03-07 10:19:00  q5_main                           INFO        Completed in 0.3s
+2026-03-07 10:19:00  q5_main                           INFO      ******************************************************
+2026-03-07 10:19:00  q5_main                           INFO      End - q5_main.py
+2026-03-07 10:19:00  q5_main                           INFO      ******************************************************

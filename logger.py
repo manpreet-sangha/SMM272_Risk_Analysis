@@ -30,6 +30,7 @@ File naming convention:  <prefix>_run_YYYYMMDD_HHMMSS.log
 
 import logging
 import os
+import re
 import sys
 from datetime import datetime
 
@@ -39,6 +40,19 @@ LOGS_DIR  = os.path.join(_ROOT_DIR, "logs")
 os.makedirs(LOGS_DIR, exist_ok=True)
 
 BANNER = "*" * 54
+
+# ── Helpers ───────────────────────────────────────────────────────────────────
+
+def _extract_qgroup(prefix: str) -> str | None:
+    """Return the first 'qN' token found in *prefix* (e.g. 'q1', 'q2'), or None.
+
+    Matches patterns like 'q1', 'q2' after a separator (_) or at the start,
+    e.g. 'smm272_q1_main' → 'q1', 'q2_main' → 'q2'.
+    """
+    # (?<![a-zA-Z]) ensures we don't match mid-word (underscores are fine)
+    m = re.search(r"(?<![a-zA-Z])q(\d+)", prefix, re.IGNORECASE)
+    return m.group(0).lower() if m else None
+
 
 # ── Internal state ─────────────────────────────────────────────────────────────
 _run_log_path = None   # absolute path of the current run's log file
@@ -83,10 +97,16 @@ def setup_run_logger(prefix: str = "smm272") -> str:
     log_filename = f"{prefix}_run_{timestamp}.log"
     _run_log_path = os.path.join(LOGS_DIR, log_filename)
 
-    # ── Enforce a maximum of 5 log files; delete oldest first ─────────────
+    # ── Enforce a maximum of 5 log files *per question group* (q1, q2, …) ──
     _MAX_LOG_FILES = 5
+    qgroup = _extract_qgroup(prefix)
     existing = sorted(
-        [os.path.join(LOGS_DIR, f) for f in os.listdir(LOGS_DIR) if f.endswith(".log")],
+        [
+            os.path.join(LOGS_DIR, f)
+            for f in os.listdir(LOGS_DIR)
+            if f.endswith(".log")
+            and (qgroup is None or qgroup in f.lower())
+        ],
         key=os.path.getmtime,
     )
     for old_file in existing[: max(0, len(existing) - _MAX_LOG_FILES + 1)]:

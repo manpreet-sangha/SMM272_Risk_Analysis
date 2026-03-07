@@ -42,11 +42,11 @@ from config import (
     Q1_1_OUTPUT_DIR,
 )
 from logger import setup_run_logger, get_logger, log_start, log_end
-from q1_3_rolling           import run_rolling_all_levels
-from q1_3_backtests         import run_all_tests
-from q1_3_logging           import log_violations
-from q1_3_plots             import generate_plots
-from q1_methods             import METHODS
+from q1_3_rolling             import run_rolling_all_levels
+from q1_3_count_violations    import count_violations
+from q1_3_logging             import log_violations
+from q1_3_plots               import generate_plots
+from q1_methods               import METHODS
 
 logger = get_logger("q1_3_var_violations")
 
@@ -86,22 +86,16 @@ def main():
     df.to_csv(out_csv)
     logger.info(f"\n  Raw VaR series saved to : {out_csv}  ({df.shape})")
 
-    # ── Statistical analysis ──────────────────────────────────────────────
-    logger.info("\n--- Computing violations and statistical tests ---")
-    violations_df, kupiec_df, christoff_df, violation_flags = run_all_tests(
+    # ── Count violations ──────────────────────────────────────────────────
+    logger.info("\n--- Counting VaR violations ---")
+    violations_df, violation_flags = count_violations(
         df, Q1_3_CONFIDENCE_LEVELS, METHODS
     )
 
-    log_violations(violations_df, kupiec_df)
+    log_violations(violations_df)
 
     violations_df.to_csv(
         os.path.join(Q1_3_OUTPUT_DIR, "violations_summary.csv"), index=False
-    )
-    kupiec_df.to_csv(
-        os.path.join(Q1_3_OUTPUT_DIR, "kupiec_results.csv"), index=False
-    )
-    christoff_df.to_csv(
-        os.path.join(Q1_3_OUTPUT_DIR, "christoffersen_results.csv"), index=False
     )
     violation_flags.to_csv(
         os.path.join(Q1_3_OUTPUT_DIR, "violation_series.csv")
@@ -114,7 +108,7 @@ def main():
 
     logger.info(f"\n  All outputs saved to: {Q1_3_OUTPUT_DIR}")
     log_end(logger, "q1_3_var_violations.py")
-    return violations_df, kupiec_df, christoff_df
+    return violations_df, violation_flags
 
 
 if __name__ == "__main__":

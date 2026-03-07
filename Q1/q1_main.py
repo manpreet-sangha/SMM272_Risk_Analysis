@@ -11,8 +11,8 @@ Sub-parts available
          visualisations, conclusions, summary).
   q1_2  Rolling 6-month VaR and ES at 99% — four methods (Historical
          Simulation, Normal, Student-t, GARCH(1,1)).
-  q1_3  (placeholder — add when implemented)
-  q1_4  (placeholder — add when implemented)
+  q1_3  VaR violations at 90%, 95%, 99% — counts, rates, and figures.
+  q1_4  Backtesting: Kupiec, Christoffersen CC, Duration, DQ tests.
 
 Usage examples
 --------------
@@ -77,13 +77,15 @@ REGISTRY: list[tuple[str, str, str]] = [
         "q1_3",
         "q1_3_var_violations",
         "Q1 Part 3 — VaR violations at 90 %, 95 %, and 99 % confidence levels "
-        "(Kupiec POF test, Christoffersen independence and joint tests)",
+        "(violation counts, rates, and diagnostic figures)",
     ),
-    # (
-    #     "q1_4",
-    #     "q1_4_statistical_analysis",
-    #     "Q1 Part 4 — (not yet implemented)",
-    # ),
+    (
+        "q1_4",
+        "q1_4_backtesting",
+        "Q1 Part 4 — VaR backtesting: Kupiec POF, Christoffersen independence + "
+        "conditional coverage, Christoffersen-Pelletier duration, and "
+        "Engle-Manganelli DQ tests",
+    ),
 ]
 
 ALL_PART_IDS = [r[0] for r in REGISTRY]
