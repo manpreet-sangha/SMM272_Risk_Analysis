@@ -149,9 +149,9 @@ def generate_plots(df, violations_df, violation_flags, confidence_levels, method
 
     # ── Figure 3: Cumulative violations over time (one panel per CI level) ─
     fig, axes = plt.subplots(
-        len(ci_pcts), 1,
-        figsize=(14, 4 * len(ci_pcts)),
-        sharex=True,
+        1, len(ci_pcts),
+        figsize=(18, 5),
+        sharey=False,
     )
     if len(ci_pcts) == 1:
         axes = [axes]
@@ -175,13 +175,14 @@ def generate_plots(df, violations_df, violation_flags, confidence_levels, method
 
         ax.set_ylabel("Cumulative Violations")
         ax.set_title(
-            f"Cumulative VaR Violations — {ci_pct}% Confidence Level", fontsize=10
+            f"{ci_pct}% Confidence Level", fontsize=11
         )
-        ax.legend(fontsize=8, ncol=3, loc="upper left")
+        ax.legend(fontsize=7, ncol=2, loc="upper left")
+        ax.set_xlabel("Date")
+        ax.xaxis.set_major_locator(mdates.YearLocator(2))
+        ax.xaxis.set_major_formatter(mdates.DateFormatter("%Y"))
+        ax.tick_params(axis='x', rotation=45)
 
-    _fmt_xaxis(axes[-1])
-    axes[-1].set_xlabel("Date")
-    fig.suptitle("Cumulative VaR Violations Over Time", fontsize=12, y=1.01)
     fig.tight_layout()
     fig.savefig(
         os.path.join(Q1_3_OUTPUT_DIR, "fig_violation_timeseries.png"),

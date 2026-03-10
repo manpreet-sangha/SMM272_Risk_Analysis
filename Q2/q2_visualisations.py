@@ -283,6 +283,55 @@ def plot_size_vs_T(df_power_T):
     return _save(fig, "fig_q2_5_size_vs_T.png")
 
 
+# ── Figure 3+5 combined: Power & Size vs. T (horizontal) ─────────────────────
+
+def plot_power_size_vs_T(df_power_T):
+    """Side-by-side: power vs T (left) and size vs T (right)."""
+    fig, (ax_pow, ax_siz) = plt.subplots(1, 2, figsize=(20, 5))
+
+    # Left: power vs T
+    for conf in Q2_CONFIDENCE_LEVELS:
+        sub = df_power_T[df_power_T["confidence"] == conf].sort_values("T")
+        col = CONF_COLOURS[conf]
+        lbl = CONF_LABELS[conf]
+        ax_pow.plot(sub["T"], sub["power_sim"] * 100,
+                    color=col, lw=2, marker="o", markersize=5,
+                    label=f"{lbl} (simulated)")
+        ax_pow.plot(sub["T"], sub["power_binomial"] * 100,
+                    color=col, lw=1.2, ls="--",
+                    label=f"{lbl} (Binomial approx.)")
+    ax_pow.axhline(5, color="gray", ls=":", lw=1.2, label="Nominal size (5%)")
+    ax_pow.axvline(250, color="red", ls="--", lw=1, alpha=0.7,
+                   label="T = 250 (1 trading year)")
+    ax_pow.set_xlabel("Sample size T (trading days)", fontsize=11)
+    ax_pow.set_ylabel("Power (%)", fontsize=11)
+    ax_pow.set_title("Power of the Kupiec Test vs. Sample Size",
+                     fontsize=12, fontweight="bold")
+    ax_pow.set_ylim(0, 105)
+    ax_pow.legend(fontsize=7, ncol=2)
+    ax_pow.grid(True, alpha=0.3)
+
+    # Right: size vs T
+    for conf in Q2_CONFIDENCE_LEVELS:
+        sub = df_power_T[df_power_T["confidence"] == conf].sort_values("T")
+        ax_siz.plot(sub["T"], sub["size"] * 100,
+                    color=CONF_COLOURS[conf], lw=2, marker="s", markersize=5,
+                    label=CONF_LABELS[conf])
+    ax_siz.axhline(5, color="black", ls="--", lw=1.2, label="Nominal 5% level")
+    ax_siz.fill_between([df_power_T["T"].min(), df_power_T["T"].max()],
+                        3.5, 6.5, color="gray", alpha=0.15, label="\u00b11.5 pp band")
+    ax_siz.set_xlabel("Sample size T (trading days)", fontsize=11)
+    ax_siz.set_ylabel("Empirical size (%)", fontsize=11)
+    ax_siz.set_title("Empirical Size of the Kupiec Test vs. Sample Size",
+                     fontsize=12, fontweight="bold")
+    ax_siz.set_ylim(0, 15)
+    ax_siz.legend(fontsize=8)
+    ax_siz.grid(True, alpha=0.3)
+
+    plt.tight_layout()
+    return _save(fig, "fig_q2_35_power_size_vs_T.png")
+
+
 # ── Figure 6: Power heatmap (T × confidence) ──────────────────────────────────
 
 def plot_power_heatmap(df_power_T):
@@ -316,6 +365,55 @@ def plot_power_heatmap(df_power_T):
 
     plt.tight_layout()
     return _save(fig, "fig_q2_6_power_heatmap.png")
+
+
+# ── Figure 4+6 combined: Persistence & Heatmap (horizontal) ───────────────
+
+def plot_persistence_heatmap(df_persist, df_power_T):
+    """Side-by-side: persistence plot (left) and power heatmap (right)."""
+    fig, (ax_per, ax_hm) = plt.subplots(1, 2, figsize=(20, 5.5),
+                                         gridspec_kw={"width_ratios": [1, 0.7]})
+
+    # Left: power vs persistence
+    for conf in Q2_CONFIDENCE_LEVELS:
+        sub = df_persist[df_persist["confidence"] == conf].sort_values("persistence")
+        ax_per.plot(sub["persistence"], sub["power"] * 100,
+                    color=CONF_COLOURS[conf], lw=2, marker="o", markersize=5,
+                    label=CONF_LABELS[conf])
+    ax_per.axhline(5, color="gray", ls=":", lw=1.2, label="Nominal size (5%)")
+    ax_per.set_xlabel("GARCH persistence  \u03c1 = \u03b1 + \u03b2", fontsize=11)
+    ax_per.set_ylabel("Power (%)", fontsize=11)
+    ax_per.set_title("Kupiec Power vs. GARCH Persistence\n"
+                     "$T = 2893$; unconditional variance held constant",
+                     fontsize=12, fontweight="bold")
+    ax_per.set_xlim(df_persist["persistence"].min() - 0.02,
+                    df_persist["persistence"].max() + 0.01)
+    ax_per.set_ylim(0, 105)
+    ax_per.legend(fontsize=9)
+    ax_per.grid(True, alpha=0.3)
+
+    # Right: power heatmap
+    pivot = df_power_T.pivot(index="T", columns="confidence", values="power_sim") * 100
+    pivot.columns = [f"{c*100:.0f}%" for c in pivot.columns]
+    cax = ax_hm.imshow(pivot.values, aspect="auto", cmap="RdYlGn",
+                       vmin=0, vmax=100, origin="lower")
+    fig.colorbar(cax, ax=ax_hm, label="Power (%)", shrink=0.85)
+    ax_hm.set_xticks(range(len(pivot.columns)))
+    ax_hm.set_xticklabels(pivot.columns, fontsize=10)
+    ax_hm.set_yticks(range(len(pivot.index)))
+    ax_hm.set_yticklabels(pivot.index.astype(int), fontsize=9)
+    ax_hm.set_xlabel("Confidence Level", fontsize=11)
+    ax_hm.set_ylabel("Sample Size T", fontsize=11)
+    ax_hm.set_title("Kupiec Power (%) Heatmap\nT \u00d7 Confidence Level",
+                    fontsize=12, fontweight="bold")
+    for i in range(len(pivot.index)):
+        for j in range(len(pivot.columns)):
+            val = pivot.values[i, j]
+            ax_hm.text(j, i, f"{val:.0f}%", ha="center", va="center",
+                       fontsize=9, color="black" if 20 < val < 80 else "white")
+
+    plt.tight_layout()
+    return _save(fig, "fig_q2_46_persistence_heatmap.png")
 
 
 # ── Figure 7: Return histogram H0 vs H1 (representative path) ────────────────
@@ -384,7 +482,9 @@ def run_visualisations(power_results, df_power_T, df_persist,
     plot_power_vs_T(df_power_T)
     plot_power_vs_persistence(df_persist)
     plot_size_vs_T(df_power_T)
+    plot_power_size_vs_T(df_power_T)
     plot_power_heatmap(df_power_T)
+    plot_persistence_heatmap(df_persist, df_power_T)
 
     if gauss_params is not None and garch_params is not None and returns is not None:
         plot_return_diagnostics(gauss_params, garch_params, returns)

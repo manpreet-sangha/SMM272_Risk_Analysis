@@ -13,5 +13,8 @@ env/
 Thumbs.db
 .DS_Store
 
+# Logs (runtime artifacts)
+logs/
+
 # Docs (Word reports and generators — kept local only)
 docs/

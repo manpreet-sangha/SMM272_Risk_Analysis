@@ -154,47 +154,44 @@ def generate_plots(df):
     colours = {tag: col for tag, _, _, col in METHODS}
     labels  = {tag: lbl for tag, lbl, _, _ in METHODS}
 
-    # ── Figure 1: All VaR series vs actual returns ────────────────────────
-    fig, ax = plt.subplots(figsize=(15, 5))
-    ax.plot(df.index, df["Actual_Return"] * 100,
-            color="#aaaaaa", alpha=0.5, linewidth=0.5, label="Daily Return", zorder=1)
-    for tag, _, _, col in METHODS:
-        ax.plot(df.index, df[f"{tag}_VaR"] * 100,
-                color=colours[tag], linewidth=1.1,
-                label=f"{labels[tag]} VaR(99%)", zorder=2)
-    ax.axhline(0, color="black", linewidth=0.4, linestyle="--")
-    ax.set_title("Rolling 6-Month VaR (99% Confidence) — Four Methods", fontsize=13)
-    ax.set_xlabel("Date")
-    ax.set_ylabel("Daily Return (%)")
-    ax.legend(ncol=3, fontsize=9, loc="lower left")
-    _fmt_xaxis(ax)
-    fig.tight_layout()
-    fig.savefig(os.path.join(Q1_2_OUTPUT_DIR, "fig_rolling_var_comparison.png"), dpi=150)
-    plt.close(fig)
-    logger.info("  Saved: fig_rolling_var_comparison.png")
+    # ── Figure 1+2: VaR and ES side by side ─────────────────────────────
+    fig, (ax_var, ax_es) = plt.subplots(1, 2, figsize=(18, 5), sharey=True)
 
-    # ── Figure 2: All ES series vs actual returns ─────────────────────────
-    fig, ax = plt.subplots(figsize=(15, 5))
-    ax.plot(df.index, df["Actual_Return"] * 100,
-            color="#aaaaaa", alpha=0.5, linewidth=0.5, label="Daily Return", zorder=1)
+    # Left panel — VaR
+    ax_var.plot(df.index, df["Actual_Return"] * 100,
+                color="#aaaaaa", alpha=0.5, linewidth=0.5, label="Daily Return", zorder=1)
     for tag, _, _, col in METHODS:
-        ax.plot(df.index, df[f"{tag}_ES"] * 100,
-                color=colours[tag], linewidth=1.1,
-                label=f"{labels[tag]} ES(99%)", zorder=2)
-    ax.axhline(0, color="black", linewidth=0.4, linestyle="--")
-    ax.set_title("Rolling 6-Month Expected Shortfall (99%) — Four Methods", fontsize=13)
-    ax.set_xlabel("Date")
-    ax.set_ylabel("Daily Return (%)")
-    ax.legend(ncol=3, fontsize=9, loc="lower left")
-    _fmt_xaxis(ax)
+        ax_var.plot(df.index, df[f"{tag}_VaR"] * 100,
+                    color=colours[tag], linewidth=1.1,
+                    label=f"{labels[tag]} VaR(99%)", zorder=2)
+    ax_var.axhline(0, color="black", linewidth=0.4, linestyle="--")
+    ax_var.set_title("Rolling 6-Month VaR (99%)", fontsize=12)
+    ax_var.set_xlabel("Date")
+    ax_var.set_ylabel("Daily Return (%)")
+    ax_var.legend(ncol=2, fontsize=8, loc="lower left")
+    _fmt_xaxis(ax_var)
+
+    # Right panel — ES
+    ax_es.plot(df.index, df["Actual_Return"] * 100,
+               color="#aaaaaa", alpha=0.5, linewidth=0.5, label="Daily Return", zorder=1)
+    for tag, _, _, col in METHODS:
+        ax_es.plot(df.index, df[f"{tag}_ES"] * 100,
+                   color=colours[tag], linewidth=1.1,
+                   label=f"{labels[tag]} ES(99%)", zorder=2)
+    ax_es.axhline(0, color="black", linewidth=0.4, linestyle="--")
+    ax_es.set_title("Rolling 6-Month Expected Shortfall (99%)", fontsize=12)
+    ax_es.set_xlabel("Date")
+    ax_es.legend(ncol=2, fontsize=8, loc="lower left")
+    _fmt_xaxis(ax_es)
+
     fig.tight_layout()
-    fig.savefig(os.path.join(Q1_2_OUTPUT_DIR, "fig_rolling_es_comparison.png"), dpi=150)
+    fig.savefig(os.path.join(Q1_2_OUTPUT_DIR, "fig_rolling_var_es_combined.png"), dpi=150)
     plt.close(fig)
-    logger.info("  Saved: fig_rolling_es_comparison.png")
+    logger.info("  Saved: fig_rolling_var_es_combined.png")
 
     # ── Figure 3: Per-method panels with breach scatter ───────────────────
-    fig, axes = plt.subplots(4, 1, figsize=(15, 18), sharex=True)
-    for ax, (tag, lbl, _, col) in zip(axes, METHODS):
+    fig, axes = plt.subplots(1, 4, figsize=(22, 5), sharey=True)
+    for i, (ax, (tag, lbl, _, col)) in enumerate(zip(axes, METHODS)):
         ax.plot(df.index, df["Actual_Return"] * 100,
                 color="#aaaaaa", alpha=0.4, linewidth=0.5, label="Daily Return")
         ax.plot(df.index, df[f"{tag}_VaR"] * 100,
@@ -202,21 +199,22 @@ def generate_plots(df):
         ax.fill_between(df.index,
                         df[f"{tag}_VaR"] * 100,
                         df[f"{tag}_ES"]  * 100,
-                        alpha=0.18, color=col, label="VaR→ES tail band")
+                        alpha=0.18, color=col, label="VaR→ES band")
         breaches = df[df["Actual_Return"] < df[f"{tag}_VaR"]]
         ax.scatter(breaches.index, breaches["Actual_Return"] * 100,
                    color="red", s=8, zorder=5, label=f"Breach ({len(breaches)})")
-        ax.set_ylabel("Return (%)", fontsize=9)
-        ax.set_title(f"{lbl}  —  VaR & ES (99%)", fontsize=10)
-        ax.legend(loc="lower right", fontsize=8, ncol=4)
+        if i == 0:
+            ax.set_ylabel("Return (%)", fontsize=10)
+        ax.set_title(lbl, fontsize=10)
+        ax.legend(loc="lower right", fontsize=7, ncol=2)
         ax.axhline(0, color="black", linewidth=0.3, linestyle="--")
-    axes[-1].set_xlabel("Date")
-    _fmt_xaxis(axes[-1])
-    fig.suptitle("Rolling VaR and ES — Breach Analysis by Method",
-                 fontsize=13, y=1.002)
+        ax.set_xlabel("Date")
+        ax.xaxis.set_major_locator(mdates.YearLocator(2))
+        ax.xaxis.set_major_formatter(mdates.DateFormatter("%Y"))
+        ax.tick_params(axis='x', rotation=45)
     fig.tight_layout()
     fig.savefig(os.path.join(Q1_2_OUTPUT_DIR, "fig_var_es_breach_panels.png"),
-                dpi=150, bbox_inches="tight")
+                dpi=200, bbox_inches="tight")
     plt.close(fig)
     logger.info("  Saved: fig_var_es_breach_panels.png")
 

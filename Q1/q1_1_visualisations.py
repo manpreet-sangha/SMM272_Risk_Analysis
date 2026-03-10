@@ -160,28 +160,27 @@ def generate_visualisations(prices=None, log_returns=None,
     rolling_std = portfolio_returns.rolling(window).std() * np.sqrt(TRADING_DAYS)
     rolling_sharpe = rolling_mean / rolling_std
 
-    fig, axes = plt.subplots(3, 1, figsize=(14, 10), sharex=True)
+    fig, axes = plt.subplots(1, 3, figsize=(18, 5), sharex=True)
 
     axes[0].plot(rolling_mean.index, rolling_mean, color="navy", linewidth=0.9)
     axes[0].axhline(0, color="grey", linestyle="--", linewidth=0.5)
-    axes[0].set_title("252-Day Rolling Annualised Mean Return", fontsize=12)
+    axes[0].set_title("252-Day Rolling Annualised\nMean Return", fontsize=11)
     axes[0].set_ylabel("Annualised Return")
 
     axes[1].plot(rolling_std.index, rolling_std, color="darkred", linewidth=0.9)
-    axes[1].set_title("252-Day Rolling Annualised Volatility", fontsize=12)
+    axes[1].set_title("252-Day Rolling Annualised\nVolatility", fontsize=11)
     axes[1].set_ylabel("Annualised Volatility")
 
     axes[2].plot(rolling_sharpe.index, rolling_sharpe, color="darkgreen", linewidth=0.9)
     axes[2].axhline(0, color="grey", linestyle="--", linewidth=0.5)
-    axes[2].set_title("252-Day Rolling Sharpe Ratio (Rf = 0)", fontsize=12)
+    axes[2].set_title("252-Day Rolling Sharpe\nRatio (Rf = 0)", fontsize=11)
     axes[2].set_ylabel("Sharpe Ratio")
-    axes[2].set_xlabel("Date")
 
     for ax in axes:
-        ax.xaxis.set_major_locator(mdates.YearLocator())
+        ax.set_xlabel("Date")
+        ax.xaxis.set_major_locator(mdates.YearLocator(2))
         ax.xaxis.set_major_formatter(mdates.DateFormatter("%Y"))
-
-    plt.xticks(rotation=45)
+        ax.tick_params(axis='x', rotation=45)
     plt.tight_layout()
     plt.savefig(os.path.join(Q1_1_OUTPUT_DIR, "fig9_rolling_statistics.png"))
     plt.close()
