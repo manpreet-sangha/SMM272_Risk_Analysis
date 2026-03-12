@@ -1,5 +1,5 @@
 """
-Q1 Part 3 — Kupiec (1995) Proportion of Failures (POF) test.
+Q1 Part 4 — Kupiec (1995) Proportion of Failures (POF) test.
 """
 
 import numpy as np

@@ -61,21 +61,39 @@ def _save(fig: plt.Figure, filename: str) -> str:
 # ── Figure 1 — Portfolio P&L Distribution ────────────────────────────────────
 
 def fig_q6_1_pnl_distribution(
-    total_pnl: np.ndarray,
-    var: float,
-    es: float,
-    confidence: float = 0.99,
+    total_pnl:        np.ndarray,
+    var:              float,
+    es:               float,
+    confidence:       float = 0.99,
+    delta_pnl:        np.ndarray | None = None,
+    delta_gamma_pnl:  np.ndarray | None = None,
 ) -> str:
     fig, ax = plt.subplots(figsize=(10, 5.5))
 
-    # Histogram
+    # Histogram (full revaluation)
     ax.hist(total_pnl, bins=120, color="#4393c3", alpha=0.72, edgecolor="none",
-            density=True, label="Simulated P&L")
+            density=True, label="Full revaluation (simulated)")
 
-    # KDE overlay
+    # KDE — full revaluation
+    all_vals = np.concatenate([total_pnl,
+                               delta_pnl        if delta_pnl        is not None else total_pnl,
+                               delta_gamma_pnl  if delta_gamma_pnl  is not None else total_pnl])
+    x_min, x_max = all_vals.min(), all_vals.max()
+    x   = np.linspace(x_min, x_max, 700)
     kde = gaussian_kde(total_pnl, bw_method="scott")
-    x   = np.linspace(total_pnl.min(), total_pnl.max(), 600)
-    ax.plot(x, kde(x), color="#1f4e79", linewidth=1.6, label="KDE")
+    ax.plot(x, kde(x), color="#1f4e79", linewidth=1.6, label="Full revaluation (KDE)")
+
+    # KDE — delta approximation
+    if delta_pnl is not None:
+        kde_d = gaussian_kde(delta_pnl, bw_method="scott")
+        ax.plot(x, kde_d(x), color="grey", linewidth=1.3, linestyle="--",
+                label="Delta approx. (KDE)", alpha=0.85)
+
+    # KDE — delta+gamma approximation
+    if delta_gamma_pnl is not None:
+        kde_dg = gaussian_kde(delta_gamma_pnl, bw_method="scott")
+        ax.plot(x, kde_dg(x), color="darkorange", linewidth=1.3, linestyle="-.",
+                label="Delta+Gamma approx. (KDE)", alpha=0.85)
 
     # VaR and ES lines
     ax.axvline(-var, color=C_VAR, linewidth=2.0, linestyle="--",
@@ -361,7 +379,12 @@ def generate_all_figures(
     var        = metrics["var"]
     es         = metrics["es"]
 
-    paths.append(fig_q6_1_pnl_distribution(total_pnl, var, es))
+    paths.append(fig_q6_1_pnl_distribution(
+        total_pnl,
+        var, es,
+        delta_pnl       = metrics.get("delta_pnl"),
+        delta_gamma_pnl = metrics.get("delta_gamma_pnl"),
+    ))
     paths.append(fig_q6_2_risk_decomposition(
         tickers, metrics["comp_var"], metrics["comp_es"],
         metrics["marg_var"], metrics["marg_es"], var, es,

@@ -8,18 +8,19 @@ levels (90%, 95%, 99%), this module:
   1.  Re-runs the rolling 6-month window estimation to obtain VaR forecasts
       at each confidence level.         → q1_3_rolling.py
   2.  Counts VaR violations (days where realised return < VaR estimate).
-  3.  Applies the Kupiec (1995) POF test for unconditional coverage.    → q1_3_kupiec.py
-  4.  Applies the Christoffersen (1998) independence test.              → q1_3_christoffersen.py
-  5.  Computes the joint conditional-coverage (CC) test statistic.      → q1_3_backtests.py
-  6.  Logs summary tables.                                              → q1_3_logging.py
-  7.  Generates three diagnostic figures.                               → q1_3_plots.py
+                                        → q1_3_count_violations.py
+  3.  Logs violation summary tables.    → q1_3_logging.py
+  4.  Generates three diagnostic figures.
+                                        → q1_3_plots.py
+
+Note: statistical backtests (Kupiec POF, Christoffersen CC, Duration, DQ)
+are performed in Part 4 (q1_4_backtesting.py), which reads the output CSVs
+produced here.
 
 Outputs (saved to Q1/output_q1_3/)
 ------------------------------------
   rolling_var_all_levels.csv      — raw VaR series at every confidence level
   violations_summary.csv          — violations count and rate per (method, CI)
-  kupiec_results.csv              — Kupiec LR, p-value, decision per (method, CI)
-  christoffersen_results.csv      — independence LR, CC LR, p-values per (method, CI)
   violation_series.csv            — daily violation flags for every (method, CI) pair
   fig_violations_heatmap.png      — observed vs expected violations heatmap
   fig_violations_barchart.png     — grouped bar chart of breach rates

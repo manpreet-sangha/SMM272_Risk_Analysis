@@ -1,5 +1,5 @@
 """
-Q1 Part 3 — Christoffersen (1998) independence test for VaR violations.
+Q1 Part 4 — Christoffersen (1998) independence test for VaR violations.
 """
 
 import numpy as np

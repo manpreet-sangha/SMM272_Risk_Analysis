@@ -1,0 +1,5 @@
+Method,Tag,N,KS_stat,p_KS,Reject_KS,Chi2_stat,p_Chi2,Reject_Chi2,LB_u_stat,p_LB_u,Reject_LB_u,LB_u2_stat,p_LB_u2,Reject_LB_u2
+Historical Simulation,HS,2893,0.0114,0.8446,False,3.4846,0.942,False,31.5424,0.0005,True,689.2659,0.0,True
+Parametric Normal,Normal,2893,0.0581,0.0,True,132.1262,0.0,True,50.5051,0.0,True,1067.5272,0.0,True
+Parametric Student-t,StudentT,2893,0.023,0.0918,False,36.4608,0.0,True,28.3907,0.0016,True,687.9425,0.0,True
+"GARCH(1,1) Normal",GARCH,2893,0.0323,0.0047,True,64.9917,0.0,True,8.2863,0.6009,False,28.9877,0.0013,True

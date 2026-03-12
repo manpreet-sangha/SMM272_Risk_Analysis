@@ -13,6 +13,7 @@ Sub-parts available
          Simulation, Normal, Student-t, GARCH(1,1)).
   q1_3  VaR violations at 90%, 95%, 99% — counts, rates, and figures.
   q1_4  Backtesting: Kupiec, Christoffersen CC, Duration, DQ tests.
+  q1_4_pit  PIT (Probability Integral Transform) density evaluation tests.
 
 Usage examples
 --------------
@@ -85,6 +86,12 @@ REGISTRY: list[tuple[str, str, str]] = [
         "Q1 Part 4 — VaR backtesting: Kupiec POF, Christoffersen independence + "
         "conditional coverage, Christoffersen-Pelletier duration, and "
         "Engle-Manganelli DQ tests",
+    ),
+    (
+        "q1_4_pit",
+        "q1_4_pit",
+        "Q1 Part 4 — PIT (Probability Integral Transform) density evaluation: "
+        "KS uniformity, chi-squared uniformity, Ljung-Box independence tests",
     ),
 ]
 

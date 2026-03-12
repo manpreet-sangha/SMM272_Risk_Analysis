@@ -12,8 +12,8 @@ q1_2_var_garch.py        → Method 4 : GARCH(1,1) dynamic conditional VaR/ES
 Outputs (saved to Q1/output_q1_2/)
 ------------------------------------
 rolling_var_es_results.csv          — full time series of all estimates
-fig_rolling_var_comparison.png      — all VaR(99%) series vs actual returns
-fig_rolling_es_comparison.png       — all ES(99%)  series vs actual returns
+backtest_summary.csv                — exceedance rates per method
+fig_rolling_var_es_combined.png     — VaR(99%) and ES(99%) side by side vs actual returns
 fig_var_es_breach_panels.png        — per-method panel with breach scatter
 fig_exceedance_rates.png            — bar chart: actual vs expected exceedance
 """

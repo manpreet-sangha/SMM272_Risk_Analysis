@@ -100,6 +100,48 @@ def compute_pnl(
     return total_pnl, inst_pnl, unit_pnl
 
 
+# ── Delta and Delta+Gamma approximation P&L ───────────────────────────────────
+
+def compute_delta_approx_pnl(
+    S_T:       np.ndarray,
+    portfolio: list[dict],
+) -> np.ndarray:
+    """
+    First-order (delta) Taylor approximation of portfolio P&L.
+
+        ΔP ≈ Σ_i  Q_i × mult × δ_i × ΔS_i
+
+    Returns (N_sims,) array.
+    """
+    n_sims    = S_T.shape[0]
+    total_pnl = np.zeros(n_sims)
+    for j, leg in enumerate(portfolio):
+        dS             = S_T[:, j] - leg["spot"]
+        total_pnl     += leg["quantity"] * leg["multiplier"] * leg["delta"] * dS
+    return total_pnl
+
+
+def compute_delta_gamma_approx_pnl(
+    S_T:       np.ndarray,
+    portfolio: list[dict],
+) -> np.ndarray:
+    """
+    Second-order (delta+gamma) Taylor approximation of portfolio P&L.
+
+        ΔP ≈ Σ_i  Q_i × mult × (δ_i × ΔS_i + ½ γ_i × ΔS_i²)
+
+    Returns (N_sims,) array.
+    """
+    n_sims    = S_T.shape[0]
+    total_pnl = np.zeros(n_sims)
+    for j, leg in enumerate(portfolio):
+        dS             = S_T[:, j] - leg["spot"]
+        total_pnl     += leg["quantity"] * leg["multiplier"] * (
+            leg["delta"] * dS + 0.5 * leg["gamma"] * dS ** 2
+        )
+    return total_pnl
+
+
 # ── VaR and ES ────────────────────────────────────────────────────────────────
 
 def compute_var_es(
@@ -265,6 +307,9 @@ def compute_all_metrics(
         S_T, portfolio, r, horizon_days
     )
 
+    delta_pnl       = compute_delta_approx_pnl(S_T, portfolio)
+    delta_gamma_pnl = compute_delta_gamma_approx_pnl(S_T, portfolio)
+
     var, es = compute_var_es(total_pnl, confidence)
 
     comp_es_res  = compute_component_es(
@@ -275,12 +320,14 @@ def compute_all_metrics(
     )
 
     return {
-        "tickers":    tickers,
-        "quantities": quantities,
-        "confidence": confidence,
-        "total_pnl":  total_pnl,
-        "inst_pnl":   inst_pnl,
-        "unit_pnl":   unit_pnl,
+        "tickers":          tickers,
+        "quantities":       quantities,
+        "confidence":       confidence,
+        "total_pnl":        total_pnl,
+        "inst_pnl":         inst_pnl,
+        "unit_pnl":         unit_pnl,
+        "delta_pnl":        delta_pnl,
+        "delta_gamma_pnl":  delta_gamma_pnl,
         "var":        var,
         "es":         es,
         "comp_es":    comp_es_res["comp_es"],
