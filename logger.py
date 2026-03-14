@@ -41,6 +41,55 @@ os.makedirs(LOGS_DIR, exist_ok=True)
 
 BANNER = "*" * 54
 
+# ── Path redaction ─────────────────────────────────────────────────────────────
+# Replace the absolute project root (which contains personal OneDrive info)
+# with a generic placeholder in every log message.
+_REDACT_PLACEHOLDER = "*******"
+
+# Paths to redact, longest first so the most specific match wins.
+_REDACT_PATHS: list[str] = sorted(
+    {_ROOT_DIR, os.path.expanduser("~")},
+    key=len,
+    reverse=True,
+)
+
+
+class _RedactPathFilter(logging.Filter):
+    """Logging filter that replaces sensitive directory paths with *******."""
+
+    def filter(self, record: logging.LogRecord) -> bool:
+        if isinstance(record.msg, str):
+            for p in _REDACT_PATHS:
+                record.msg = record.msg.replace(p, _REDACT_PLACEHOLDER)
+        if record.args:
+            if isinstance(record.args, dict):
+                record.args = {
+                    k: v.replace(p, _REDACT_PLACEHOLDER)
+                    if isinstance(v, str) else v
+                    for k, v in record.args.items()
+                    for p in _REDACT_PATHS
+                }
+            else:
+                record.args = tuple(
+                    self._redact(a) for a in record.args
+                )
+        return True
+
+    @staticmethod
+    def _redact(value):
+        if isinstance(value, str):
+            for p in _REDACT_PATHS:
+                value = value.replace(p, _REDACT_PLACEHOLDER)
+        return value
+
+
+def redact(text: str) -> str:
+    """Replace sensitive directory paths in *text* with *******."""
+    for p in _REDACT_PATHS:
+        text = text.replace(p, _REDACT_PLACEHOLDER)
+    return text
+
+
 # ── Helpers ───────────────────────────────────────────────────────────────────
 
 def _extract_qgroup(prefix: str) -> str | None:
@@ -118,6 +167,7 @@ def setup_run_logger(prefix: str = "smm272") -> str:
     root = logging.getLogger()
     root.setLevel(logging.DEBUG)
     root.handlers.clear()          # remove any handlers added by third-party libs
+    root.addFilter(_RedactPathFilter())   # redact personal paths from all messages
 
     fmt = logging.Formatter(
         "%(asctime)s  %(name)-32s  %(levelname)-8s  %(message)s",

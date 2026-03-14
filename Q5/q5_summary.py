@@ -135,7 +135,7 @@ def save_risk_arrays_csv():
     combined = pd.concat(frames, ignore_index=True)
     path = os.path.join(config.Q5_OUTPUT_DIR, "span_risk_arrays.csv")
     combined.to_csv(path, index=False, float_format="%.2f")
-    print(f"  Saved: {path}")
+    print(f"  Saved: {os.path.basename(path)}")
     return path
 
 
@@ -143,7 +143,7 @@ def save_margin_comparison_csv():
     df = run_all_margins()
     path = os.path.join(config.Q5_OUTPUT_DIR, "margin_comparison.csv")
     df.to_csv(path, index=False, float_format="%.2f")
-    print(f"  Saved: {path}")
+    print(f"  Saved: {os.path.basename(path)}")
     return path
 
 
@@ -152,7 +152,7 @@ def save_netting_benefits_csv():
     path = os.path.join(config.Q5_OUTPUT_DIR, "netting_benefits.csv")
     df[["pair_name", "no_net_total", "span_net_margin",
         "netting_benefit", "netting_pct"]].to_csv(path, index=False, float_format="%.2f")
-    print(f"  Saved: {path}")
+    print(f"  Saved: {os.path.basename(path)}")
     return path
 
 
@@ -160,7 +160,7 @@ def save_decomposition_csv():
     df = decomposition_df()
     path = os.path.join(config.Q5_OUTPUT_DIR, "margin_decomposition.csv")
     df.to_csv(path, index=False, float_format="%.2f")
-    print(f"  Saved: {path}")
+    print(f"  Saved: {os.path.basename(path)}")
     return path
 
 

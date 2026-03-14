@@ -124,7 +124,7 @@ def fig_q5_1_risk_array_heatmap():
 
     fig.tight_layout()
     path = _save(fig, "fig_q5_1_risk_array_heatmap.png")
-    print(f"  Saved: {path}")
+    print(f"  Saved: {os.path.basename(path)}")
     return path
 
 
@@ -178,7 +178,7 @@ def fig_q5_2_scenario_profiles():
     ax.grid(True, alpha=0.3)
     fig.tight_layout()
     path = _save(fig, "fig_q5_2_scenario_profiles.png")
-    print(f"  Saved: {path}")
+    print(f"  Saved: {os.path.basename(path)}")
     return path
 
 
@@ -230,7 +230,7 @@ def fig_q5_3_margin_comparison():
 
     fig.tight_layout()
     path = _save(fig, "fig_q5_3_margin_comparison.png")
-    print(f"  Saved: {path}")
+    print(f"  Saved: {os.path.basename(path)}")
     return path
 
 
@@ -277,7 +277,7 @@ def fig_q5_4_netting_benefit():
     )
     fig.tight_layout()
     path = _save(fig, "fig_q5_4_netting_benefit.png")
-    print(f"  Saved: {path}")
+    print(f"  Saved: {os.path.basename(path)}")
     return path
 
 
@@ -350,7 +350,7 @@ def fig_q5_34_margin_netting():
 
     fig.tight_layout()
     path = _save(fig, "fig_q5_34_margin_netting.png")
-    print(f"  Saved: {path}")
+    print(f"  Saved: {os.path.basename(path)}")
     return path
 
 
@@ -424,7 +424,7 @@ def fig_q5_5_option_payoffs():
     )
     fig.tight_layout()
     path = _save(fig, "fig_q5_5_option_payoffs.png")
-    print(f"  Saved: {path}")
+    print(f"  Saved: {os.path.basename(path)}")
     return path
 
 
@@ -493,7 +493,7 @@ def fig_q5_5_option_payoffs_horizontal():
 
     fig.tight_layout(pad=0.6, h_pad=0.8, w_pad=0.5)
     path = _save(fig, "fig_q5_5_option_payoffs_horizontal.png")
-    print(f"  Saved: {path}")
+    print(f"  Saved: {os.path.basename(path)}")
     return path
 
 
@@ -527,7 +527,7 @@ def fig_q5_6_span_sensitivity():
     ax.grid(True, alpha=0.3)
     fig.tight_layout()
     path = _save(fig, "fig_q5_6_span_sensitivity.png")
-    print(f"  Saved: {path}")
+    print(f"  Saved: {os.path.basename(path)}")
     return path
 
 

@@ -250,7 +250,7 @@ def main():
     elapsed = time.perf_counter() - t0
     print(f"\n{BANNER}")
     print(f"  Q6 pipeline complete in {elapsed:.1f}s")
-    print(f"  Outputs: {config.Q6_OUTPUT_DIR}")
+    print(f"  Outputs: {os.path.basename(config.Q6_OUTPUT_DIR)}")
     print(BANNER)
     log_end(logger, "q6_main.py")
 
